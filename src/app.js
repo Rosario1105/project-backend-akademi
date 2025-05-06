@@ -1,17 +1,12 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-
-
-
-dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-
-mongoose.connect(process.env.MONGO_URI, {
-    userNewUrlParser: true,
+mongoose.connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
     useUnifiedTopology: true,
 })
 .then(() => console.log('Conectado a la base de datos'))
@@ -21,7 +16,7 @@ app.get('/', (req, res) => {
     res.send('API CLINICA VORTEX');
 });
 
-const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => {
     console.log(`Servidor funcionando http://localhost:${PORT}`);  
 });
