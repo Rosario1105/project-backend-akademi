@@ -9,7 +9,8 @@ const patientSchema = new mongoose.Schema({
     phone : { type: String },
     email: { type: String},
     address: { type: String },
-    birthdate: { type: Date}
+    birthdate: { type: Date},
+    isActive: {type: Boolean, defaulte: true}
 }, { timestamps: true});
 
 module.exports = moongose.model('Patient', patientSchema);
