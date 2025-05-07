@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, "The password is required"],
+      select: false,
     },
     role: {
       type: String,
@@ -25,6 +26,8 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    resetToken: { type: String },
+    resetTokenExpires: { type: Date },
   },
   {
     timestamps: true,
