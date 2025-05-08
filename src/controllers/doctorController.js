@@ -10,13 +10,33 @@ const createDoctor = async (req, res) => {
 };
 
 const getDoctors = async (req, res) =>{
+    const { specialty } = req.query;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+    
+    if(!specialty){
+        return res.status(400).json({ msg: 'El filtro "specialty" es obligatorio'});
+    }
+
     try{
-        const doctors = await Doctor.find();
-        res.json(doctors);
+        const regex = new RegExp (specialty, 'i');
+        const filters = { specialty: regex};
+
+        const doctors = await Doctor.find(filters).skip(skip).limit(limit);
+        const total = await Doctor.countDocuments(filters);
+
+        res.json({
+            total,
+            page,
+            totalPages: Math.ceil(total / limit), 
+            results: doctors
+        })
     } catch (error){
         res.status(500).json({ msg: 'Error al obtener doctores', error: error.message});
     }
 };
+
 
 const getDoctorById = async (req, res) => {
     try{
