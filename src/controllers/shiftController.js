@@ -42,7 +42,7 @@ const getShifts = async (req, res) => {
 
     try{
         const shifts = await Shift.find(filters)
-        .populate('patient', 'name dni medicalCoverage')
+        .populate('patient', 'name dni')
         .populate('doctor', 'name specialty')
         .sort({date: 1});
 
