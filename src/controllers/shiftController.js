@@ -52,8 +52,36 @@ const getShifts = async (req, res) => {
     }
 }
 
+const updateShiftState = async (req, res) =>{
+    const { state } = req.body;
+    const allowedStates =  ['Earring', 'Done', 'Canceled'];
+
+    if(!allowedStates.includes(state)){
+        return res.status(400).json({ msg: 'Estado invalido. Solo se permite: Earring, Done, Canceled'});
+    }
+
+    try {
+        const shift = await Shift.findByIdAndUpdate(
+            req.params.id,
+            { state },
+            { new: true }
+        );
+
+        if(!shift){
+            return res.status(404).json({msg: 'Turno no encontrado'});
+        }
+
+        res.json({ msg: `'Estado del turno actualizado a'${state}`, shift})
+    } catch (error){
+        res.status(500).json({msg: 'Error al actualizar el estado del turno', error: error.message});
+    }
+}
+
+
+
 module.exports = {
     createShift,
-    getShifts
+    getShifts,
+    updateShiftState
 }
 
