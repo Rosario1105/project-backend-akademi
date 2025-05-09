@@ -1,0 +1,847 @@
+{
+	"info": {
+		"_postman_id": "32460ee1-ee33-4c03-9229-529eb7da3834",
+		"name": "ClinicaVortexRosario",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27744920"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"maxi.diaz66@gmail.com\",\r\n    \"password\": \"Maxidiaz11\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Maximiliano Diaz\",\r\n    \"email\": \"maxi.diaz66@gmail.com\",\r\n    \"password\": \"Rosario11\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recover Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"maxi.diaz66@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/auth/recover",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"auth",
+								"recover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "d47cf6ae873443576a864df1ad25e50f6f4effc711c6882808e528ae70eb0dcc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"Maxidiaz11\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/auth/reset-password/9eeedda5a41f679d8cbeb6484f4b762c7053f5945eab4d3e477b07b42e7331bb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"auth",
+								"reset-password",
+								"9eeedda5a41f679d8cbeb6484f4b762c7053f5945eab4d3e477b07b42e7331bb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get AllUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get UserById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWE1ZTg5YTg2OGJjMDRjMTQ2MzZlNyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0Njc2MDYzMywiZXhwIjoxNzQ2NzY0MjMzfQ.Fvw3zsO8KdLK68wl_WTVn5hEIIOZ9tnHnaVDMLNKJvY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7000/api/users/681a5e89a868bc04c14636e7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"users",
+								"681a5e89a868bc04c14636e7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWRlNzA0MDY3YWYyY2UxOGRhZWFjZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0Njc5MDE2NCwiZXhwIjoxNzQ2NzkzNzY0fQ.zjUAZqihseuybX_nzcXtN3mxrKCEOzf_VQ0u4gGpWbg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"rosarito\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/users/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWRlNzA0MDY3YWYyY2UxOGRhZWFjZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0Njc5MDE2NCwiZXhwIjoxNzQ2NzkzNzY0fQ.zjUAZqihseuybX_nzcXtN3mxrKCEOzf_VQ0u4gGpWbg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7000/api/users/681de6c9067af2ce18daeacc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"users",
+								"681de6c9067af2ce18daeacc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Patients",
+			"item": [
+				{
+					"name": "Create Patients",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUyY2JjOTAxMTg4NWI2OGI3ODk3NCIsInJvbGUiOiJyZWNlcGNpb24iLCJpYXQiOjE3NDY4MDgwMTMsImV4cCI6MTc0NjgxMTYxM30.C7uPe7Ags57zwehy975LDhqYZGuD-rzLnTlSMQzwebU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"dni\": \"01734579\",\r\n  \"name\": \"Vale Diaz\",\r\n  \"coverage\": \"sancor\",\r\n  \"email\": \"vale1@gmail.com\",\r\n  \"birthDate\": \"2000-01-20\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/patients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get PatientsById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUyY2JjOTAxMTg4NWI2OGI3ODk3NCIsInJvbGUiOiJyZWNlcGNpb24iLCJpYXQiOjE3NDY4MDgwMTMsImV4cCI6MTc0NjgxMTYxM30.C7uPe7Ags57zwehy975LDhqYZGuD-rzLnTlSMQzwebU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/patients/681e34470715834959658781",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"patients",
+								"681e34470715834959658781"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Patients",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUyY2JjOTAxMTg4NWI2OGI3ODk3NCIsInJvbGUiOiJyZWNlcGNpb24iLCJpYXQiOjE3NDY4MDgwMTMsImV4cCI6MTc0NjgxMTYxM30.C7uPe7Ags57zwehy975LDhqYZGuD-rzLnTlSMQzwebU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Valentina Guadalupe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/patients/681e34470715834959658781",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"patients",
+								"681e34470715834959658781"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Patients",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUyY2JjOTAxMTg4NWI2OGI3ODk3NCIsInJvbGUiOiJyZWNlcGNpb24iLCJpYXQiOjE3NDY4MDgwMTMsImV4cCI6MTc0NjgxMTYxM30.C7uPe7Ags57zwehy975LDhqYZGuD-rzLnTlSMQzwebU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/patients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Patients",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUyY2JjOTAxMTg4NWI2OGI3ODk3NCIsInJvbGUiOiJyZWNlcGNpb24iLCJpYXQiOjE3NDY4MDgwMTMsImV4cCI6MTc0NjgxMTYxM30.C7uPe7Ags57zwehy975LDhqYZGuD-rzLnTlSMQzwebU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"susanita\",\r\n\"coverage\":\"subsidio\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/patients/681e34470715834959658781",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"patients",
+								"681e34470715834959658781"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Doctors",
+			"item": [
+				{
+					"name": "Create Doctors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUyY2JjOTAxMTg4NWI2OGI3ODk3NCIsInJvbGUiOiJyZWNlcGNpb24iLCJpYXQiOjE3NDY4MDgwMTMsImV4cCI6MTc0NjgxMTYxM30.C7uPe7Ags57zwehy975LDhqYZGuD-rzLnTlSMQzwebU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Ludmila Roes\",\r\n    \"specialty\":\"Ginecologa\",\r\n    \"license\": \"891837\",\r\n    \"phone\": \"3816434883\",\r\n    \"email\": \"ludmila@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/doctors/681e35c76b125552ebc1c97b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"doctors",
+								"681e35c76b125552ebc1c97b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Doctors",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUyY2JjOTAxMTg4NWI2OGI3ODk3NCIsInJvbGUiOiJyZWNlcGNpb24iLCJpYXQiOjE3NDY4MDgwMTMsImV4cCI6MTc0NjgxMTYxM30.C7uPe7Ags57zwehy975LDhqYZGuD-rzLnTlSMQzwebU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Lucia Perez\",\r\n    \"specialty\":\"neurologo\",\r\n    \"license\": \"657236\",\r\n    \"phone\": \"3816434883\",\r\n    \"email\": \"juan@gmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/doctors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"doctors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get DoctorsById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUyY2JjOTAxMTg4NWI2OGI3ODk3NCIsInJvbGUiOiJyZWNlcGNpb24iLCJpYXQiOjE3NDY4MTA4NjMsImV4cCI6MTc0NjgxNDQ2M30.tIT2ROAFABYfBUG53h1uRSvEnSttONKC7Vp0r2T9YEQ\",",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Lucia Perez\",\r\n    \"specialty\":\"neurologo\",\r\n    \"license\": \"657236\",\r\n    \"phone\": \"3816434883\",\r\n    \"email\": \"juan@gmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/doctors/681e35c76b125552ebc1c97b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"doctors",
+								"681e35c76b125552ebc1c97b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Doctors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUyY2JjOTAxMTg4NWI2OGI3ODk3NCIsInJvbGUiOiJyZWNlcGNpb24iLCJpYXQiOjE3NDY4MDgwMTMsImV4cCI6MTc0NjgxMTYxM30.C7uPe7Ags57zwehy975LDhqYZGuD-rzLnTlSMQzwebU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Julia M Alvarez\"\r\n    }\r\n    ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/doctors/681e35c76b125552ebc1c97b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"doctors",
+								"681e35c76b125552ebc1c97b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Disable Doctors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUyY2JjOTAxMTg4NWI2OGI3ODk3NCIsInJvbGUiOiJyZWNlcGNpb24iLCJpYXQiOjE3NDY4MTA4NjMsImV4cCI6MTc0NjgxNDQ2M30.tIT2ROAFABYfBUG53h1uRSvEnSttONKC7Vp0r2T9YEQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Lucia Perez\",\r\n    \"specialty\":\"neurologo\",\r\n    \"license\": \"657236\",\r\n    \"phone\": \"3816434883\",\r\n    \"email\": \"juan@gmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/doctors/681e35706b125552ebc1c96c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"doctors",
+								"681e35706b125552ebc1c96c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shifts",
+			"item": [
+				{
+					"name": "Get Shifts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUyY2JjOTAxMTg4NWI2OGI3ODk3NCIsInJvbGUiOiJyZWNlcGNpb24iLCJpYXQiOjE3NDY4MTA4NjMsImV4cCI6MTc0NjgxNDQ2M30.tIT2ROAFABYfBUG53h1uRSvEnSttONKC7Vp0r2T9YEQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"patient\": \"681e02022577b73576c836d3\",\r\n    \"doctor\":\"681e08d07612ddbc630bf7a0\",\r\n    \"reason\": \"dolor de cabeza\",\r\n    \"date\": \"2025-05-15\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/shifts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"shifts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Shift",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUyY2JjOTAxMTg4NWI2OGI3ODk3NCIsInJvbGUiOiJyZWNlcGNpb24iLCJpYXQiOjE3NDY4MTA4NjMsImV4cCI6MTc0NjgxNDQ2M30.tIT2ROAFABYfBUG53h1uRSvEnSttONKC7Vp0r2T9YEQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"patient\": \"681e2ee7eccbc605444ef477\",\r\n    \"doctor\":\"681e35816b125552ebc1c96f\",\r\n    \"reason\": \"Mucho dolor de cabeza\",\r\n    \"date\": \"2025-05-27 5:30 pm\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/shifts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"shifts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get ShiftsById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUyY2JjOTAxMTg4NWI2OGI3ODk3NCIsInJvbGUiOiJyZWNlcGNpb24iLCJpYXQiOjE3NDY4MTIwMTEsImV4cCI6MTc0NjgxNTYxMX0.gtvAWC7i8cyZuWsJFo0n5HriYR2E4g7bacHWQov-8Fk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"patient\": \"681e02022577b73576c836d3\",\r\n    \"doctor\":\"681e08d07612ddbc630bf7a0\",\r\n    \"reason\": \"dolor de cabeza\",\r\n    \"date\": \"2025-05-15\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/shifts/681e3c36d82d1329d2c13ab2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"shifts",
+								"681e3c36d82d1329d2c13ab2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update ShiftsState",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWUyY2JjOTAxMTg4NWI2OGI3ODk3NCIsInJvbGUiOiJyZWNlcGNpb24iLCJpYXQiOjE3NDY4MTIwMTEsImV4cCI6MTc0NjgxNTYxMX0.gtvAWC7i8cyZuWsJFo0n5HriYR2E4g7bacHWQov-8Fk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"state\":\"Earring\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/shifts/681e3c36d82d1329d2c13ab2/state",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"shifts",
+								"681e3c36d82d1329d2c13ab2",
+								"state"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

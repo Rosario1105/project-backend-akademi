@@ -1,15 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const{
-    getAllUsers,
-    getUserById,
-    updateUser,
-    deleteUser,
-    createUser,
-} = require('../controllers/userController');
-const {protect, adminOnly} = require('../middlewares/authMiddleware');
-
+const {
+  getAllUsers,
+  getUserById,
+  updateUser,
+  deleteUser,
+  createUser,
+} = require("../controllers/userController");
+const { protect, adminOnly } = require("../middlewares/authMiddleware");
 
 router.get("/", protect, adminOnly, getAllUsers);
 router.post("/", protect, adminOnly, createUser);

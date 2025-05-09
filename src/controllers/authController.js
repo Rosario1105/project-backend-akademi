@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const crypto = require("crypto");
-const sendEmail = require("../utils/sendEmail");
+const sendEmails = require("../utils/sendEmails");
 
 const recoverPasswordRequest = async (req, res) => {
   const { email } = req.body;
@@ -28,16 +28,14 @@ const recoverPasswordRequest = async (req, res) => {
         <a href="${resetLink}">${resetLink}</a>
       `;
 
-    await sendEmail(user.email, "Recuperación de contraseña - AKADEMI", html);
+    await sendEmails(user.email, "Recuperación de contraseña - AKADEMI", html);
 
     res.json({ message: "Correo enviado con éxito" });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error al procesar la solicitud",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error al procesar la solicitud",
+      error: error.message,
+    });
   }
 };
 
@@ -55,9 +53,7 @@ const resetPassword = async (req, res) => {
       return res.status(400).json({ message: "Token inválido o expirado" });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
-
+    user.password = password;
     user.resetToken = undefined;
     user.resetTokenExpires = undefined;
 
@@ -65,20 +61,22 @@ const resetPassword = async (req, res) => {
 
     res.json({ message: "Contraseña actualizada correctamente" });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error al restablecer la contraseña",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error al restablecer la contraseña",
+      error: error.message,
+    });
   }
 };
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email);
+  console.log(password);
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("+password");
+    console.log(user);
+
     if (!user) return res.status(404).json({ message: "Usuario no encotrado" });
 
     if (!user.isActive)
@@ -86,7 +84,11 @@ const loginUser = async (req, res) => {
         .status(403)
         .json({ message: "Usuario inactivo, comuniquese con el admin" });
 
+    console.log(user.password);
+
     const equals = await bcrypt.compare(password, user.password);
+    console.log(equals);
+
     if (!equals)
       return res.status(401).json({ message: "Contraseña incorrecta" });
 
@@ -94,9 +96,13 @@ const loginUser = async (req, res) => {
       id: user._id,
       role: user.role,
     };
+    console.log(payload);
+
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: 3600,
     });
+    console.log(process.env.JWT_SECRET);
+    console.log(token);
 
     res.json({
       token,
@@ -133,4 +139,9 @@ const registerUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser, recoverPasswordRequest, resetPassword};
+module.exports = {
+  registerUser,
+  loginUser,
+  recoverPasswordRequest,
+  resetPassword,
+};
