@@ -6,22 +6,21 @@ const getAllUsers = async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;
   const skip = (page - 1) * limit;
 
- 
-     try {
-       const users = await User.find({}).skip(skip).limit(limit);
-       const total = await User.countDocuments({});
-   
-       res.json({
-         total,
-         page,
-         totalPages: Math.ceil(total / limit),
-         results: users,
-       });
-     } catch (error) {
-       res
-         .status(500)
-         .json({ msg: "Error al obtener pacientes", error: error.message });
-     }
+  try {
+    const users = await User.find({}).skip(skip).limit(limit);
+    const total = await User.countDocuments({});
+
+    res.json({
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+      results: users,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ msg: "Error al obtener pacientes", error: error.message });
+  }
 };
 
 const getUserById = async (req, res) => {
@@ -39,29 +38,32 @@ const getUserById = async (req, res) => {
 const createUser = async (req, res) => {
   const { name, email, password, role } = req.body;
 
-  if(!name || !email || !password || !role){
-    return res.status(400).json({msg: 'Todos los campos son obligatorios'});
+  if (!name || !email || !password || !role) {
+    return res.status(400).json({ msg: "Todos los campos son obligatorios" });
   }
 
-  
   if (name.trim().length < 8) {
-  return res.status(400).json({ msg: 'El nombre debe tener al menos 8 caracteres' });
-}
-  
+    return res
+      .status(400)
+      .json({ msg: "El nombre debe tener al menos 8 caracteres" });
+  }
 
-if(!email.includes('@') || !email.includes('.')){
-  return res.status(400).json({msg: 'Email invalido'});
-}
+  if (!email.includes("@") || !email.includes(".")) {
+    return res.status(400).json({ msg: "Email invalido" });
+  }
 
-if (!password || password.trim().length < 8) {
-  return res.status(400).json({ msg: 'La contraseña debe tener al menos 8 caracteres reales' });
-}
+  if (!password || password.trim().length < 8) {
+    return res
+      .status(400)
+      .json({ msg: "La contraseña debe tener al menos 8 caracteres reales" });
+  }
 
-const validRoles = ['admin', 'recepcion'];
-if(!validRoles.includes(role)){
-  return res.status(400).json({msg: 'Rol invalido. Debe ser "admin" o "recepcion"'});
-  
-}
+  const validRoles = ["admin", "recepcion"];
+  if (!validRoles.includes(role)) {
+    return res
+      .status(400)
+      .json({ msg: 'Rol invalido. Debe ser "admin" o "recepcion"' });
+  }
 
   try {
     const exists = await User.findOne({ email });
@@ -93,14 +95,15 @@ if(!validRoles.includes(role)){
 const updateUser = async (req, res) => {
   const { name, email, role, isActive } = req.body;
 
-  const validRoles = ['admin', 'recepcion'];
-  if(!validRoles.includes(role)){
-        return res.status(400).json({msg: 'Rol invalido. Debe ser "admin" o "recepcion"'});
-
+  const validRoles = ["admin", "recepcion"];
+  if (!validRoles.includes(role)) {
+    return res
+      .status(400)
+      .json({ msg: 'Rol invalido. Debe ser "admin" o "recepcion"' });
   }
 
-  if(!email.includes('@') || !email.includes('.')){
-    return res.status(400).json({msg: 'Email invalido'});
+  if (!email.includes("@") || !email.includes(".")) {
+    return res.status(400).json({ msg: "Email invalido" });
   }
 
   try {

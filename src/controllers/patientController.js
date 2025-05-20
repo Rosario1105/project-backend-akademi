@@ -8,18 +8,24 @@ const createPatient = async (req, res) => {
     });
   }
 
- if(name.trim().length < 8 || !/^[a-zA-Z\s]+$/.test(name)){
-  return res
-  .status(400)
-  .json({msg:"Nombre invalido. Debe tener al menos 8 caracteres y solo letras"});
- } 
-
-  if (!/^\d{7,9}$/.test(dni)) {
-    return res.status(400).json({ msg: "DNI inválido. Debe tener entre 7 y 9 dígitos" });
+  if (name.trim().length < 8 || !/^[a-zA-Z\s]+$/.test(name)) {
+    return res
+      .status(400)
+      .json({
+        msg: "Nombre invalido. Debe tener al menos 8 caracteres y solo letras",
+      });
   }
 
-   if (coverage.trim().length < 3) {
-    return res.status(400).json({ msg: "La cobertura debe tener al menos 3 caracteres" });
+  if (!/^\d{7,9}$/.test(dni)) {
+    return res
+      .status(400)
+      .json({ msg: "DNI inválido. Debe tener entre 7 y 9 dígitos" });
+  }
+
+  if (coverage.trim().length < 3) {
+    return res
+      .status(400)
+      .json({ msg: "La cobertura debe tener al menos 3 caracteres" });
   }
 
   if (!/\S+@\S+\.\S+/.test(email)) {
@@ -33,7 +39,6 @@ const createPatient = async (req, res) => {
   if (!isOlder) {
     return res.status(400).json({ msg: "El paciente debe ser mayor de edad" });
   }
-
 
   try {
     const exists = await Patient.findOne({ dni });
@@ -58,33 +63,33 @@ const createPatient = async (req, res) => {
 };
 
 const getPatients = async (req, res) => {
-    const { dni, name, coverage } = req.query;
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const skip = (page - 1) * limit;
-  
-    const filters = {};
-    if (dni) filters.dni = dni;
-    if (name) filters.name = new RegExp(name, "i");
-    if (coverage) filters.coverage = new RegExp(coverage, "i");
-  
-    try {
-      const patients = await Patient.find(filters).skip(skip).limit(limit);
-      const total = await Patient.countDocuments(filters);
-  
-      res.json({
-        total,
-        page,
-        totalPages: Math.ceil(total / limit),
-        results: patients,
-      });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ msg: "Error al obtener pacientes", error: error.message });
-    }
-  };
-  
+  const { dni, name, coverage } = req.query;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  const filters = {};
+  if (dni) filters.dni = dni;
+  if (name) filters.name = new RegExp(name, "i");
+  if (coverage) filters.coverage = new RegExp(coverage, "i");
+
+  try {
+    const patients = await Patient.find(filters).skip(skip).limit(limit);
+    const total = await Patient.countDocuments(filters);
+
+    res.json({
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+      results: patients,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ msg: "Error al obtener pacientes", error: error.message });
+  }
+};
+
 const getPatientById = async (req, res) => {
   try {
     const patient = await Patient.findById(req.params.id);
