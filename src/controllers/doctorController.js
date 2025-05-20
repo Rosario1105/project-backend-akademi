@@ -2,7 +2,51 @@ const Shift = require("../models/Shift");
 const Doctor = require("../models/Doctor");
 
 const createDoctor = async (req, res) => {
+
+  const { name, specialty, license, phone, email } = req.body;
+
+  if (!name || !specialty || !license || !phone || !email) {
+    return res.status(400).json({ msg: "Todos los campos son obligatorios" });
+  }
+
+   if (name.trim().length < 8 || !/^[a-zA-Z\s]+$/.test(name)) {
+    return res
+      .status(400)
+      .json({ msg: "Nombre inválido. Debe tener al menos 8 caracteres y solo letras/espacios" });
+  }
+  if (specialty.trim().length < 8 || !/^[a-zA-Z\s]+$/.test(specialty)) {
+    return res.status(400).json({
+      msg: "Especialidad inválida. Debe tener al menos 8 caracteres y solo letras/espacios",
+    });
+  }
+
+  if (license.trim().length < 5) {
+    return res
+      .status(400)
+      .json({ msg: "La matrícula debe tener al menos 5 caracteres" });
+  }
+
+   if (!/^\+?\d{10,15}$/.test(phone)) {
+    return res.status(400).json({
+      msg: "Número de celular inválido. Debe tener entre 10 y 15 dígitos, y puede comenzar con +",
+    });
+  }
+
+if (!/\S+@\S+\.\S+/.test(email)) {
+    return res.status(400).json({ msg: "Email inválido" });
+  }
+
   try {
+    const licenseExists = await Doctor.findOne({ license });
+    if (licenseExists) {
+      return res.status(400).json({ msg: "Ya existe un doctor con esa matrícula" });
+    }
+
+    const emailExists = await Doctor.findOne({ email });
+    if (emailExists) {
+      return res.status(400).json({ msg: "Ya existe un doctor con ese email" });
+    }
+
     const doctor = await Doctor.create(req.body);
     res.status(201).json(doctor);
   } catch (error) {

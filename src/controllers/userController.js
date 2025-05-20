@@ -39,9 +39,33 @@ const getUserById = async (req, res) => {
 const createUser = async (req, res) => {
   const { name, email, password, role } = req.body;
 
+  if(!name || !email || !password || !role){
+    return res.status(400).json({msg: 'Todos los campos son obligatorios'});
+  }
+
+  
+  if (name.trim().length < 8) {
+  return res.status(400).json({ msg: 'El nombre debe tener al menos 8 caracteres' });
+}
+  
+
+if(!email.includes('@') || !email.includes('.')){
+  return res.status(400).json({msg: 'Email invalido'});
+}
+
+if (!password || password.trim().length < 8) {
+  return res.status(400).json({ msg: 'La contraseña debe tener al menos 8 caracteres reales' });
+}
+
+const validRoles = ['admin', 'recepcion'];
+if(!validRoles.includes(role)){
+  return res.status(400).json({msg: 'Rol invalido. Debe ser "admin" o "recepcion"'});
+  
+}
+
   try {
     const exists = await User.findOne({ email });
-    if (exists) return res.status(400).json({ mgs: "El usuario ya existe" });
+    if (exists) return res.status(400).json({ msg: "El usuario ya existe" });
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -68,6 +92,16 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { name, email, role, isActive } = req.body;
+
+  const validRoles = ['admin', 'recepcion'];
+  if(!validRoles.includes(role)){
+        return res.status(400).json({msg: 'Rol invalido. Debe ser "admin" o "recepcion"'});
+
+  }
+
+  if(!email.includes('@') || !email.includes('.')){
+    return res.status(400).json({msg: 'Email invalido'});
+  }
 
   try {
     const user = await User.findById(req.params.id);

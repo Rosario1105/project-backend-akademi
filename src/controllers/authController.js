@@ -4,16 +4,14 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const sendEmails = require("../utils/sendEmails");
 
-
-
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   console.log(email);
-  
+
   try {
     const user = await User.findOne({ email }).select("+password");
     console.log(user);
-    
+
     if (!user) return res.status(404).json({ message: "Usuario no encotrado" });
 
     if (!user.isActive)
@@ -21,10 +19,9 @@ const loginUser = async (req, res) => {
         .status(403)
         .json({ message: "Usuario inactivo, comuniquese con el admin" });
 
-        
     const equals = await bcrypt.compare(password, user.password);
     console.log(equals);
-    
+
     if (!equals)
       return res.status(401).json({ message: "Contraseña incorrecta" });
 
@@ -33,13 +30,12 @@ const loginUser = async (req, res) => {
       role: user.role,
     };
     console.log(payload);
-    
+
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: 3600,
     });
     console.log(process.env.JWT_SECRET);
     console.log(token);
-    
 
     res.json({
       token,
@@ -57,6 +53,9 @@ const loginUser = async (req, res) => {
 
 const registerUser = async (req, res) => {
   const { name, email, password, role } = req.body;
+
+
+
 
   try {
     const exist = await User.findOne({ email });
@@ -85,11 +84,9 @@ const recoverPasswordRequest = async (req, res) => {
       return res.status(404).json({ msg: "Usuario no encontrado o inactivo" });
     }
 
-    const resetToken = jwt.sign(
-      {id: user.id},
-      process.env.JWT_SECRET,
-      {expiresIn: '1h'}
-    );
+    const resetToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
     await user.save();
 
@@ -105,12 +102,10 @@ const recoverPasswordRequest = async (req, res) => {
 
     res.json({ message: "Correo enviado con éxito" });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error al procesar la solicitud",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error al procesar la solicitud",
+      error: error.message,
+    });
   }
 };
 
@@ -122,19 +117,16 @@ const resetPassword = async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await User.findById(decoded.id);
-    if(!user){
-      return res.status(404).json({msg: "Usuario no encontrado"});
+    if (!user) {
+      return res.status(404).json({ msg: "Usuario no encontrado" });
     }
     user.password = password;
     await user.save();
 
-    
     if (!user) {
       return res.status(400).json({ message: "Token inválido o expirado" });
     }
 
-
- 
     res.json({ message: "Contraseña actualizada correctamente" });
   } catch (error) {
     res.status(500).json({
@@ -144,4 +136,9 @@ const resetPassword = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser, recoverPasswordRequest, resetPassword};
+module.exports = {
+  registerUser,
+  loginUser,
+  recoverPasswordRequest,
+  resetPassword,
+};

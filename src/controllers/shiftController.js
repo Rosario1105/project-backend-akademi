@@ -4,21 +4,46 @@ const Patient = require("../models/Patient");
 const sendEmail = require("../utils/sendEmails");
 
 const createShift = async (req, res) => {
+
+  
     try {
       const { patient, doctor, date, reason } = req.body;
   
       if (!patient || !doctor || !date || !reason) {
         return res.status(400).json({ msg: "Todos los campos son obligatorios" });
       }
-  
+
+      
       const shiftDate = new Date(date);
       const now = new Date();
       if (shiftDate < now) {
         return res
-          .status(400)
-          .json({ msg: "No se puede crear un turno en una fecha pasada" });
+        .status(400)
+        .json({ msg: "No se puede crear un turno en una fecha pasada" });
       }
+      
+     if (isNaN(shiftDate.getTime())) {
+       return res.status(400).json({ msg: "Fecha inválida" });
+     }
   
+    const hour = shiftDate.getHours();
+    const minutes = shiftDate.getMinutes();
+    if (
+      hour < 10 || hour >= 18 ||
+      (minutes !== 0 && minutes !== 30)
+    ) {
+      return res.status(400).json({
+        msg: "El turno debe ser entre las 10:00 y las 18:00, en intervalos de 30 minutos",
+      });
+    }
+
+     if (reason.trim().length < 10 || reason.trim().length > 200) {
+      return res.status(400).json({
+        msg: "El motivo debe tener entre 10 y 200 caracteres",
+      });
+    }
+
+
       const patientFound = await Patient.findById(patient);
       if (!patientFound || !patientFound.isActive) {
         return res.status(400).json({ msg: "Paciente invalido o inactivo" });

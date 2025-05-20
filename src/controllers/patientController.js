@@ -8,6 +8,33 @@ const createPatient = async (req, res) => {
     });
   }
 
+ if(name.trim().length < 8 || !/^[a-zA-Z\s]+$/.test(name)){
+  return res
+  .status(400)
+  .json({msg:"Nombre invalido. Debe tener al menos 8 caracteres y solo letras"});
+ } 
+
+  if (!/^\d{7,9}$/.test(dni)) {
+    return res.status(400).json({ msg: "DNI inválido. Debe tener entre 7 y 9 dígitos" });
+  }
+
+   if (coverage.trim().length < 3) {
+    return res.status(400).json({ msg: "La cobertura debe tener al menos 3 caracteres" });
+  }
+
+  if (!/\S+@\S+\.\S+/.test(email)) {
+    return res.status(400).json({ msg: "Email inválido" });
+  }
+  const birth = new Date(birthDate);
+  const today = new Date();
+  const age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  const isOlder = age > 18 || (age === 18 && m >= 0);
+  if (!isOlder) {
+    return res.status(400).json({ msg: "El paciente debe ser mayor de edad" });
+  }
+
+
   try {
     const exists = await Patient.findOne({ dni });
     if (exists) {
