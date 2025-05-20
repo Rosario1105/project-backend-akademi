@@ -29,6 +29,7 @@ const createPatient = async (req, res) => {
       .json({ msg: "Error al crear paciente", error: error.message });
   }
 };
+
 const getPatients = async (req, res) => {
     const { dni, name, coverage } = req.query;
     const page = parseInt(req.query.page) || 1;
@@ -56,6 +57,7 @@ const getPatients = async (req, res) => {
         .json({ msg: "Error al obtener pacientes", error: error.message });
     }
   };
+  
 const getPatientById = async (req, res) => {
   try {
     const patient = await Patient.findById(req.params.id);

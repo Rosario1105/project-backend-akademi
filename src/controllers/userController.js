@@ -2,14 +2,26 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
 const getAllUsers = async (req, res) => {
-  try {
-    const users = await User.find({});
-    res.json(users);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ msg: "Error al obtener usuarios", error: error.message });
-  }
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+ 
+     try {
+       const users = await User.find({}).skip(skip).limit(limit);
+       const total = await User.countDocuments({});
+   
+       res.json({
+         total,
+         page,
+         totalPages: Math.ceil(total / limit),
+         results: users,
+       });
+     } catch (error) {
+       res
+         .status(500)
+         .json({ msg: "Error al obtener pacientes", error: error.message });
+     }
 };
 
 const getUserById = async (req, res) => {

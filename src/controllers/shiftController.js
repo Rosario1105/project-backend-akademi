@@ -59,7 +59,6 @@ const createShift = async (req, res) => {
           .json({ msg: "El doctor ya tiene el máximo de 10 turnos ese día" });
       }
   
-      // ✅ Crea el turno antes de usarlo
       const shift = await Shift.create({
         patient,
         doctor,

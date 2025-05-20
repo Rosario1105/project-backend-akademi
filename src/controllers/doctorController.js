@@ -21,7 +21,7 @@ const getDoctors = async (req, res) => {
   const filters = {};
 
   if (specialty) {
-    filters.specialty = new RegExp(specialty, "i"); // búsqueda insensible
+    filters.specialty = new RegExp(specialty, "i");
   }
 
   try {

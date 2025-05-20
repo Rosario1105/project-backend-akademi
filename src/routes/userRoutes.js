@@ -10,6 +10,7 @@ const {
 } = require("../controllers/userController");
 const { protect, adminOnly } = require("../middlewares/authMiddleware");
 
+
 router.get("/", protect, adminOnly, getAllUsers);
 router.post("/", protect, adminOnly, createUser);
 router.get("/:id", protect, adminOnly, getUserById);
